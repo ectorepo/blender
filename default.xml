@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml" />
+
+  <default remote="github" sync-j="8" revision="refs/heads/master" />
+
+  <project path="pillar/attract" name="attract" groups=""/>
+  <project path="addons/blender-addons-contrib" name="blender-addons-contrib" groups=""/>
+  <project path="addons/blender-addons" name="blender-addons" groups=""/>
+  <project path="tools/blender-app-templates" name="blender-app-templates" groups=""/>
+  <project path="tools/blender-asset-tracer" name="blender-asset-tracer" groups=""/>
+  <project path="dev/blender-benchmark-bundle" name="blender-benchmark-bundle" groups=""/>
+  <project path="/blender-bfct" name="blender-bfct" groups=""/>
+  <project path="dev/blender-buildbot-www" name="blender-buildbot-www" groups=""/>
+  <project path="dev/blender-buildbot" name="blender-buildbot" groups=""/>
+  <project path="cloud/blender-cloud-addon" name="blender-cloud-addon" groups=""/>
+  <project path="cloud/blender-cloud" name="blender-cloud" groups=""/>
+  <project path="dev/blender-dev-tools" name="blender-dev-tools" groups=""/>
+  <project path="addons/blender-extensions-platform" name="blender-extensions-platform" groups=""/>
+  <project path="tools/blender-file" name="blender-file" groups=""/>
+  <project path="addons/blender-id-addon" name="blender-id-addon" groups=""/>
+  <project path="web/blender-id" name="blender-id" groups=""/>
+  <project path="dev/blender-open-data" name="blender-open-data" groups=""/>
+  <project path="addons/blender-package-manager-addon" name="blender-package-manager-addon" groups=""/>
+  <project path="dev/blender-staging" name="blender-staging" groups=""/>
+  <project path="studio/blender-studio-tools" name="blender-studio-tools" groups=""/>
+  <project path="studio/blender-studio" name="blender-studio" groups=""/>
+  <project path="tools/blender-translations" name="blender-translations" groups=""/>
+  <project path="web/blender-web-assets" name="blender-web-assets" groups=""/>
+  <project path="core/blender" name="blender" groups=""/>
+  <project path="core/cycles" name="cycles" groups=""/>
+  <project path="render/flamenco-manager" name="flamenco-manager" groups=""/>
+  <project path="render/flamenco-worker" name="flamenco-worker" groups=""/>
+  <project path="render/flamenco" name="flamenco" groups=""/>
+  <project path="dev/libmv" name="libmv" groups=""/>
+  <project path="web/looper" name="looper" groups=""/>
+  <project path="dev/oss-attribution-builder" name="oss-attribution-builder" groups=""/>
+  <project path="svn/pillar-python-sdk" name="pillar-python-sdk" groups=""/>
+  <project path="svn/pillar-svnman" name="pillar-svnman" groups=""/>
+  <project path="svn/pillar" name="pillar" groups=""/>
+  <project path="dev/scons" name="scons" groups=""/>
+
+</manifest>
