@@ -2,7 +2,7 @@
 <manifest>
   <include name="_remotes.xml" />
 
-  <default remote="github" sync-j="8" revision="refs/heads/master" />
+  <default remote="blender" sync-j="8" revision="refs/heads/master" />
 
   <project path="pillar/attract" name="attract" groups=""/>
   <project path="addons/blender-addons-contrib" name="blender-addons-contrib" groups=""/>
