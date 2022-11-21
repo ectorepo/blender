@@ -16,7 +16,7 @@
   <project path="cloud/blender-cloud-addon" name="blender-cloud-addon" groups=""/>
   <project path="cloud/blender-cloud" name="blender-cloud" groups=""/>
   <project path="dev/blender-dev-tools" name="blender-dev-tools" groups=""/>
-  <project path="addons/blender-extensions-platform" name="blender-extensions-platform" groups=""/>
+  <project path="addons/blender-extensions-platform" name="blender-extensions-platform" groups="" revision="refs/heads/main"/>
   <project path="tools/blender-file" name="blender-file" groups=""/>
   <project path="addons/blender-id-addon" name="blender-id-addon" groups=""/>
   <project path="web/blender-id" name="blender-id" groups=""/>
@@ -31,7 +31,7 @@
   <project path="core/cycles" name="cycles" groups=""/>
   <project path="render/flamenco-manager" name="flamenco-manager" groups=""/>
   <project path="render/flamenco-worker" name="flamenco-worker" groups=""/>
-  <project path="render/flamenco" name="flamenco" groups=""/>
+  <project path="render/flamenco" name="flamenco" groups="" revision="refs/heads/main"/>
   <project path="dev/libmv" name="libmv" groups=""/>
   <project path="web/looper" name="looper" groups=""/>
   <project path="dev/oss-attribution-builder" name="oss-attribution-builder" groups=""/>
