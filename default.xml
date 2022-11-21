@@ -10,7 +10,7 @@
   <project path="tools/blender-app-templates" name="blender-app-templates" groups=""/>
   <project path="tools/blender-asset-tracer" name="blender-asset-tracer" groups=""/>
   <project path="dev/blender-benchmark-bundle" name="blender-benchmark-bundle" groups=""/>
-  <project path="/blender-bfct" name="blender-bfct" groups=""/>
+  <project path="web/blender-bfct" name="blender-bfct" groups=""/>
   <project path="dev/blender-buildbot-www" name="blender-buildbot-www" groups=""/>
   <project path="dev/blender-buildbot" name="blender-buildbot" groups=""/>
   <project path="cloud/blender-cloud-addon" name="blender-cloud-addon" groups=""/>
