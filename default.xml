@@ -35,9 +35,9 @@
   <project path="dev/libmv" name="libmv" groups=""/>
   <project path="web/looper" name="looper" groups=""/>
   <project path="dev/oss-attribution-builder" name="oss-attribution-builder" groups=""/>
-  <project path="svn/pillar-python-sdk" name="pillar-python-sdk" groups=""/>
-  <project path="svn/pillar-svnman" name="pillar-svnman" groups=""/>
-  <project path="svn/pillar" name="pillar" groups=""/>
+  <project path="pillar/pillar-python-sdk" name="pillar-python-sdk" groups=""/>
+  <project path="pillar/pillar-svnman" name="pillar-svnman" groups=""/>
+  <project path="pillar/pillar" name="pillar" groups=""/>
   <project path="dev/scons" name="scons" groups=""/>
 
 </manifest>
