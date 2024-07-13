@@ -1,0 +1,22 @@
+#+TITLE:     Ectorepo: Blender
+#+AUTHOR:    David Conner
+#+EMAIL:     aionfork@gmail.com
+#+DESCRIPTION: notes
+
+
+Blender recently migrated to Gitea hosted at [[https://projects.blender.org][projects.blender.org]]
+
+* Resources
+
+
+* [[https://projects.blender.org/explore/organizations][Organizations]]
+
+** Blender
+
+** Studio
+
+** Extensions
+
+** Infrastructure
+
+** Archive
