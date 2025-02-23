@@ -20,3 +20,66 @@ Blender recently migrated to Gitea hosted at [[https://projects.blender.org][pro
 ** Infrastructure
 
 ** Archive
+
+* Structure
+
+** Changes
+
+*** Checking Repo Status
+
+#+begin_src sh
+xq '.manifest | .project[] | ."@name" | @text "https://projects.blender.org/blender/\(.)"' ./default.xml \
+   curl -w '%{http_connect} %{http_code} %{response_code} '
+#+end_src
+
+
+*** Previous
+
++ Default branch name mostly changed to main
++ Previously organized as below
+
+#+begin_quote
+data/ecto/blender/
+├── addons
+│   ├── blender-addons
+│   ├── blender-addons-contrib
+│   ├── blender-extensions-platform
+│   ├── blender-id-addon
+│   └── blender-package-manager-addon
+├── cloud
+│   ├── blender-cloud
+│   └── blender-cloud-addon
+├── core
+│   ├── blender
+│   └── cycles
+├── dev
+│   ├── blender-benchmark-bundle
+│   ├── blender-buildbot
+│   ├── blender-buildbot-www
+│   ├── blender-dev-tools
+│   ├── blender-open-data
+│   ├── blender-staging
+│   ├── libmv
+│   ├── oss-attribution-builder
+│   └── scons
+├── pillar
+│   ├── attract
+│   └── pillar
+├── render
+│   ├── flamenco
+│   ├── flamenco-manager
+│   └── flamenco-worker
+├── studio
+│   ├── blender-studio
+│   └── blender-studio-tools
+├── tools
+│   ├── blender-app-templates
+│   ├── blender-asset-tracer
+│   ├── blender-file
+│   └── blender-translations
+└── web
+├── blender-bfct
+├── blender-id
+├── blender-web-assets
+└── looper
+#+end_quote
