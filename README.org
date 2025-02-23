@@ -2,16 +2,61 @@
 #+AUTHOR:    David Conner
 #+EMAIL:     aionfork@gmail.com
 #+DESCRIPTION: notes
-
+#+PROPERTY: header-args :comments none
 
 Blender recently migrated to Gitea hosted at [[https://projects.blender.org][projects.blender.org]]
-
-* Resources
-
 
 * [[https://projects.blender.org/explore/organizations][Organizations]]
 
 ** Blender
+
+This API route will be deprecated soon
+
+#+name: blenderRepos
+#+begin_src restclient :jq "map(select(.archived | not) | [.full_name, .name, .default_branch, .size, .archived])[] | @csv" :results table :jq-args "--raw-output"
+:gt-url-base = https://projects.blender.org/api/v1/
+:gt-org = blender
+:gt-url-path = orgs/:gt-org/repos
+
+:headers = <<
+Accept: application/json
+User-Agent: Emacs
+# X-GitHub-Api-Version: 2022-11-28
+# Authorization: Bearer :gh-token
+#
+
+GET :gt-url-base/:gt-url-path
+:headers
+
+# nope, just use :jq and :jq-args above.
+# -> jq-set-var :repo-sizes map(.owner)
+# -> jq-set-var :repo-sizes map(. | "(.owner.login)")
+#+end_src
+
+#+RESULTS: blenderRepos
+| blender/blender-app-templates       | blender-app-templates       | main |      208 | false |
+| blender/blender-asset-tracer        | blender-asset-tracer        | main |    66608 | false |
+| blender/cycles                      | cycles                      | main |    20024 | false |
+| blender/libmv                       | libmv                       | main |    11717 | false |
+| blender/oss-attribution-builder     | oss-attribution-builder     | main |     3562 | false |
+| blender/blender-manual              | blender-manual              | main |  2362806 | false |
+| blender/blender-addons              | blender-addons              | main |    52457 | false |
+| blender/blender                     | blender                     | main |  2213818 | false |
+| blender/blender-manual-translations | blender-manual-translations | main |  1875868 | false |
+| blender/blender-ui-translations     | blender-ui-translations     | main |  1118270 | false |
+| blender/blender-developer-docs      | blender-developer-docs      | main |  1719477 | false |
+| blender/lib-linux_x64               | lib-linux_x64               | main | 11978831 | false |
+| blender/lib-macos_arm64             | lib-macos_arm64             | main |  8377560 | false |
+| blender/lib-macos_x64               | lib-macos_x64               | main |  6245516 | false |
+| blender/lib-windows_x64             | lib-windows_x64             | main | 14097105 | false |
+| blender/blender-assets              | blender-assets              | main |  3282614 | false |
+| blender/blender-test-data           | blender-test-data           | main |  2206621 | false |
+| blender/blender-benchmarks          | blender-benchmarks          | main |  5597603 | false |
+| blender/lib-source                  | lib-source                  | main |  4579640 | false |
+| blender/lib-windows_arm64           | lib-windows_arm64           | main |  6450424 | false |
+
+*** TODO repos from other orgs and add named tables to filter
+
 
 ** Studio
 
@@ -21,19 +66,17 @@ Blender recently migrated to Gitea hosted at [[https://projects.blender.org][pro
 
 ** Archive
 
+
+
 * Structure
 
 ** Changes
 
-*** Checking Repo Status
-
-#+begin_src sh
-xq '.manifest | .project[] | ."@name" | @text "https://projects.blender.org/blender/\(.)"' ./default.xml \
-   curl -w '%{http_connect} %{http_code} %{response_code} '
-#+end_src
+curl https://projects.blender.org/blender/
 
 
-*** Previous
+
+** Previous
 
 + Default branch name mostly changed to main
 + Previously organized as below
@@ -83,3 +126,52 @@ data/ecto/blender/
 ├── blender-web-assets
 └── looper
 #+end_quote
+** Checking Repo Status
+
+*** Via original manifest
+
+#+begin_src sh :results output table
+xq -r '.manifest | .project[] | ."@name" | @text "https://projects.blender.org/blender/\(.)"' ./default.xml |
+    while read url; do
+        curl -o /dev/null -sLw '%{http_connect} %{http_code} %{response_code} %{url_effective} \n' $url
+    done
+#   xargs curl -w '%{http_connect} %{http_code} %{response_code} '
+#+end_src
+
+#+RESULTS:
+| 0 | 404 | 404 | https://projects.blender.org/blender/attract                           |
+| 0 | 404 | 404 | https://projects.blender.org/blender/extensions/blender-addons-contrib |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender/blender-addons            |
+| 0 | 200 | 200 | https://projects.blender.org/blender/blender-asset-tracer              |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-bfct                      |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-buildbot-www              |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-buildbot                  |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-cloud-addon               |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-cloud                     |
+| 0 | 200 | 200 | https://projects.blender.org/blender/blender-dev-tools                 |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-extensions-platform       |
+| 0 | 200 | 200 | https://projects.blender.org/archive/blender-file                      |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-id-addon                  |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-id                        |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-open-data                 |
+| 0 | 200 | 200 | https://projects.blender.org/archive/blender-package-manager-addon     |
+| 0 | 200 | 200 | https://projects.blender.org/archive/blender-archive                   |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-studio-tools              |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-studio                    |
+| 0 | 200 | 200 | https://projects.blender.org/blender/blender-translations              |
+| 0 | 404 | 404 | https://projects.blender.org/blender/blender-web-assets                |
+| 0 | 200 | 200 | https://projects.blender.org/blender/blender                           |
+| 0 | 200 | 200 | https://projects.blender.org/blender/cycles                            |
+| 0 | 404 | 404 | https://projects.blender.org/blender/flamenco-manager                  |
+| 0 | 404 | 404 | https://projects.blender.org/blender/flamenco-worker                   |
+| 0 | 404 | 404 | https://projects.blender.org/blender/flamenco                          |
+| 0 | 200 | 200 | https://projects.blender.org/blender/libmv                             |
+| 0 | 404 | 404 | https://projects.blender.org/blender/looper                            |
+| 0 | 200 | 200 | https://projects.blender.org/blender/oss-attribution-builder           |
+| 0 | 404 | 404 | https://projects.blender.org/blender/pillar-python-sdk                 |
+| 0 | 404 | 404 | https://projects.blender.org/blender/pillar-svnman                     |
+| 0 | 404 | 404 | https://projects.blender.org/blender/pillar                            |
+| 0 | 200 | 200 | https://projects.blender.org/archive/scons                             |
+| 0 | 404 | 404 | https://projects.blender.org/blender/archive/blender-benchmark-bundle  |
+
+
