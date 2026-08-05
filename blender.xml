@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest>
+  <project name="blender/blender" path="blender/blender" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/blender-asset-tracer" path="blender/blender-asset-tracer" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/blender-assets" path="blender/blender-assets" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/blender-benchmarks" path="blender/blender-benchmarks" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/blender-developer-docs" path="blender/blender-developer-docs" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/blender-manual" path="blender/blender-manual" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/blender-manual-translations" path="blender/blender-manual-translations" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/blender-ui-translations" path="blender/blender-ui-translations" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/cycles" path="blender/cycles" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/lib-ios_arm64" path="blender/lib-ios_arm64" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/lib-linux_arm64" path="blender/lib-linux_arm64" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/lib-linux_x64" path="blender/lib-linux_x64" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/lib-macos_arm64" path="blender/lib-macos_arm64" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/lib-macos_x64" path="blender/lib-macos_x64" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/lib-source" path="blender/lib-source" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/lib-windows_arm64" path="blender/lib-windows_arm64" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/lib-windows_x64" path="blender/lib-windows_x64" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/libmv" path="blender/libmv" revision="refs/heads/main" remote="blender"/>
+  <project name="blender/oss-attribution-builder" path="blender/oss-attribution-builder" revision="refs/heads/main" remote="blender"/>
+</manifest>

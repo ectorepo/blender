@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest>
+  <project name="lab/blender_mcp" path="lab/blender_mcp" revision="refs/heads/main" remote="blender"/>
+  <project name="lab/claypencil" path="lab/claypencil" revision="refs/heads/main" remote="blender"/>
+</manifest>

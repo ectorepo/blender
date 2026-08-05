@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest>
+  <project name="infrastructure/archive-website" path="infrastructure/archive-website" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/blender-bot" path="infrastructure/blender-bot" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/blender-buildbot-www" path="infrastructure/blender-buildbot-www" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/blender-id" path="infrastructure/blender-id" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/blender-id-addon" path="infrastructure/blender-id-addon" revision="refs/heads/master" remote="blender"/>
+  <project name="infrastructure/blender-id-oauth-client" path="infrastructure/blender-id-oauth-client" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/blender-metrics" path="infrastructure/blender-metrics" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/blender-open-data" path="infrastructure/blender-open-data" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/blender-org" path="infrastructure/blender-org" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/blender-org-down" path="infrastructure/blender-org-down" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/blender-store" path="infrastructure/blender-store" revision="refs/heads/master" remote="blender"/>
+  <project name="infrastructure/codesign" path="infrastructure/codesign" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/conference-video-processing" path="infrastructure/conference-video-processing" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/conference-website" path="infrastructure/conference-website" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/developer-website" path="infrastructure/developer-website" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/devfund-website" path="infrastructure/devfund-website" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/discourse-blender-id" path="infrastructure/discourse-blender-id" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/docs-website" path="infrastructure/docs-website" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/extensions-website" path="infrastructure/extensions-website" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/gitea-blenderid-webhook" path="infrastructure/gitea-blenderid-webhook" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/gitea-custom" path="infrastructure/gitea-custom" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/looper" path="infrastructure/looper" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/mediawiki-bootstrap" path="infrastructure/mediawiki-bootstrap" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/meta" path="infrastructure/meta" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/saleor-vatrc" path="infrastructure/saleor-vatrc" revision="refs/heads/main" remote="blender"/>
+  <project name="infrastructure/web-assets" path="infrastructure/web-assets" revision="refs/heads/main" remote="blender"/>
+</manifest>

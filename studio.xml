@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest>
+  <project name="studio/asset-bundles" path="studio/asset-bundles" revision="refs/heads/main" remote="blender"/>
+  <project name="studio/blender-studio" path="studio/blender-studio" revision="refs/heads/main" remote="blender"/>
+  <project name="studio/blender-studio-tools" path="studio/blender-studio-tools" revision="refs/heads/main" remote="blender"/>
+  <project name="studio/flamenco" path="studio/flamenco" revision="refs/heads/main" remote="blender"/>
+  <project name="studio/flamenco-orchestra" path="studio/flamenco-orchestra" revision="refs/heads/main" remote="blender"/>
+  <project name="studio/playsync" path="studio/playsync" revision="refs/heads/main" remote="blender"/>
+  <project name="studio/svn-manager" path="studio/svn-manager" revision="refs/heads/main" remote="blender"/>
+  <project name="studio/watchtower" path="studio/watchtower" revision="refs/heads/main" remote="blender"/>
+</manifest>

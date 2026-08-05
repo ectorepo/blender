@@ -6,172 +6,524 @@
 
 Blender recently migrated to Gitea hosted at [[https://projects.blender.org][projects.blender.org]]
 
-* [[https://projects.blender.org/explore/organizations][Organizations]]
++ [[https://projects.blender.org/explore/organizations][projects.blender.org/explore/organizations]]
+
+* Organizations
 
 ** Blender
 
-This API route will be deprecated soon
++ the =lib= repos are useful as documentation
 
-#+name: blenderRepos
-#+begin_src restclient :jq "map(select(.archived | not) | [.full_name, .name, .default_branch, .size, .archived])[] | @csv" :results table :jq-args "--raw-output"
-:gt-url-base = https://projects.blender.org/api/v1/
-:gt-org = blender
-:gt-url-path = orgs/:gt-org/repos
+** Lab
 
-:headers = <<
-Accept: application/json
-User-Agent: Emacs
-# X-GitHub-Api-Version: 2022-11-28
-# Authorization: Bearer :gh-token
-#
-
-GET :gt-url-base/:gt-url-path
-:headers
-
-# nope, just use :jq and :jq-args above.
-# -> jq-set-var :repo-sizes map(.owner)
-# -> jq-set-var :repo-sizes map(. | "(.owner.login)")
-#+end_src
-
-#+RESULTS: blenderRepos
-| blender/blender-app-templates       | blender-app-templates       | main |      208 | false |
-| blender/blender-asset-tracer        | blender-asset-tracer        | main |    66608 | false |
-| blender/cycles                      | cycles                      | main |    20024 | false |
-| blender/libmv                       | libmv                       | main |    11717 | false |
-| blender/oss-attribution-builder     | oss-attribution-builder     | main |     3562 | false |
-| blender/blender-manual              | blender-manual              | main |  2362806 | false |
-| blender/blender-addons              | blender-addons              | main |    52457 | false |
-| blender/blender                     | blender                     | main |  2213818 | false |
-| blender/blender-manual-translations | blender-manual-translations | main |  1875868 | false |
-| blender/blender-ui-translations     | blender-ui-translations     | main |  1118270 | false |
-| blender/blender-developer-docs      | blender-developer-docs      | main |  1719477 | false |
-| blender/lib-linux_x64               | lib-linux_x64               | main | 11978831 | false |
-| blender/lib-macos_arm64             | lib-macos_arm64             | main |  8377560 | false |
-| blender/lib-macos_x64               | lib-macos_x64               | main |  6245516 | false |
-| blender/lib-windows_x64             | lib-windows_x64             | main | 14097105 | false |
-| blender/blender-assets              | blender-assets              | main |  3282614 | false |
-| blender/blender-test-data           | blender-test-data           | main |  2206621 | false |
-| blender/blender-benchmarks          | blender-benchmarks          | main |  5597603 | false |
-| blender/lib-source                  | lib-source                  | main |  4579640 | false |
-| blender/lib-windows_arm64           | lib-windows_arm64           | main |  6450424 | false |
-
-*** TODO repos from other orgs and add named tables to filter
-
-
-** Studio
+** Education
 
 ** Extensions
 
+** Studio
+
 ** Infrastructure
 
-** Archive
+* Manifest
 
+#+begin_src xml :tangle default.xml
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="github" sync-j="8" revision="refs/heads/master"/>
+  <include name="blender.xml"/>
+  <include name="education.xml"/>
+  <include name="extensions.xml"/>
+  <include name="lab.xml"/>
+  <include name="studio.xml"/>
+  <include name="infrastructure.xml"/>
+</manifest>
+#+end_src
 
+** Babel Setup
 
-* Structure
+To avoid confirmations
 
-** Changes
+#+begin_src emacs-lisp
+(setq-local org-confirm-babel-evaluate nil)
+#+end_src
 
-curl https://projects.blender.org/blender/
+Load blocks
 
-
-
-** Previous
-
-+ Default branch name mostly changed to main
-+ Previously organized as below
-
-#+begin_quote
-data/ecto/blender/
-├── addons
-│   ├── blender-addons
-│   ├── blender-addons-contrib
-│   ├── blender-extensions-platform
-│   ├── blender-id-addon
-│   └── blender-package-manager-addon
-├── cloud
-│   ├── blender-cloud
-│   └── blender-cloud-addon
-├── core
-│   ├── blender
-│   └── cycles
-├── dev
-│   ├── blender-benchmark-bundle
-│   ├── blender-buildbot
-│   ├── blender-buildbot-www
-│   ├── blender-dev-tools
-│   ├── blender-open-data
-│   ├── blender-staging
-│   ├── libmv
-│   ├── oss-attribution-builder
-│   └── scons
-├── pillar
-│   ├── attract
-│   └── pillar
-├── render
-│   ├── flamenco
-│   ├── flamenco-manager
-│   └── flamenco-worker
-├── studio
-│   ├── blender-studio
-│   └── blender-studio-tools
-├── tools
-│   ├── blender-app-templates
-│   ├── blender-asset-tracer
-│   ├── blender-file
-│   └── blender-translations
-└── web
-├── blender-bfct
-├── blender-id
-├── blender-web-assets
-└── looper
-#+end_quote
-** Checking Repo Status
-
-*** Via original manifest
-
-#+begin_src sh :results output table
-xq -r '.manifest | .project[] | ."@name" | @text "https://projects.blender.org/blender/\(.)"' ./default.xml |
-    while read url; do
-        curl -o /dev/null -sLw '%{http_connect} %{http_code} %{response_code} %{url_effective} \n' $url
-    done
-#   xargs curl -w '%{http_connect} %{http_code} %{response_code} '
+#+begin_src emacs-lisp
+(org-babel-lob-ingest "../babel.org")
 #+end_src
 
 #+RESULTS:
-| 0 | 404 | 404 | https://projects.blender.org/blender/attract                           |
-| 0 | 404 | 404 | https://projects.blender.org/blender/extensions/blender-addons-contrib |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender/blender-addons            |
-| 0 | 200 | 200 | https://projects.blender.org/blender/blender-asset-tracer              |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-bfct                      |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-buildbot-www              |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-buildbot                  |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-cloud-addon               |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-cloud                     |
-| 0 | 200 | 200 | https://projects.blender.org/blender/blender-dev-tools                 |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-extensions-platform       |
-| 0 | 200 | 200 | https://projects.blender.org/archive/blender-file                      |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-id-addon                  |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-id                        |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-open-data                 |
-| 0 | 200 | 200 | https://projects.blender.org/archive/blender-package-manager-addon     |
-| 0 | 200 | 200 | https://projects.blender.org/archive/blender-archive                   |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-studio-tools              |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-studio                    |
-| 0 | 200 | 200 | https://projects.blender.org/blender/blender-translations              |
-| 0 | 404 | 404 | https://projects.blender.org/blender/blender-web-assets                |
-| 0 | 200 | 200 | https://projects.blender.org/blender/blender                           |
-| 0 | 200 | 200 | https://projects.blender.org/blender/cycles                            |
-| 0 | 404 | 404 | https://projects.blender.org/blender/flamenco-manager                  |
-| 0 | 404 | 404 | https://projects.blender.org/blender/flamenco-worker                   |
-| 0 | 404 | 404 | https://projects.blender.org/blender/flamenco                          |
-| 0 | 200 | 200 | https://projects.blender.org/blender/libmv                             |
-| 0 | 404 | 404 | https://projects.blender.org/blender/looper                            |
-| 0 | 200 | 200 | https://projects.blender.org/blender/oss-attribution-builder           |
-| 0 | 404 | 404 | https://projects.blender.org/blender/pillar-python-sdk                 |
-| 0 | 404 | 404 | https://projects.blender.org/blender/pillar-svnman                     |
-| 0 | 404 | 404 | https://projects.blender.org/blender/pillar                            |
-| 0 | 200 | 200 | https://projects.blender.org/archive/scons                             |
-| 0 | 404 | 404 | https://projects.blender.org/blender/archive/blender-benchmark-bundle  |
+: 1
 
+* Blender
 
+#+name: blenderLogin
+#+begin_src emacs-lisp
+"blender"
+#+end_src
+
+Excluded Repositories
+
+#+NAME: blenderGiteaReposExclude
+| .github    |
+
+#+name: blenderGiteaReposFetch
+#+call: ghubGiteaReposFetch(login=blenderLogin)
+
+Clone bundle sizes
+
+#+name: blenderGiteaReposBundles
+#+call: ghubGiteaReposBundles(repos=blenderGiteaReposFetch)
+
+#+RESULTS: blenderGiteaReposBundles
+|    74781 | blender | refs/heads/main | blender-asset-tracer        | 2026-07-31T11:38:43+02:00 | nil | nil | https://projects.blender.org/blender/blender-asset-tracer        |
+|    24790 | blender | refs/heads/main | cycles                      | 2026-07-30T14:48:37+02:00 | nil | nil | https://projects.blender.org/blender/cycles                      |
+|    11717 | blender | refs/heads/main | libmv                       | 2023-02-07T12:45:19+01:00 | nil | nil | https://projects.blender.org/blender/libmv                       |
+|     3562 | blender | refs/heads/main | oss-attribution-builder     | 2024-07-15T16:53:53+02:00 | nil | nil | https://projects.blender.org/blender/oss-attribution-builder     |
+|   883869 | blender | refs/heads/main | blender-manual              | 2026-08-05T02:56:46+02:00 | nil | nil | https://projects.blender.org/blender/blender-manual              |
+|  6338212 | blender | refs/heads/main | blender                     | 2026-08-05T19:32:39+02:00 | nil | nil | https://projects.blender.org/blender/blender                     |
+|  6685891 | blender | refs/heads/main | blender-manual-translations | 2026-08-05T15:01:53+02:00 | nil | nil | https://projects.blender.org/blender/blender-manual-translations |
+|  2314914 | blender | refs/heads/main | blender-ui-translations     | 2026-08-05T17:38:56+02:00 | nil | nil | https://projects.blender.org/blender/blender-ui-translations     |
+|  2048383 | blender | refs/heads/main | blender-developer-docs      | 2026-08-05T19:43:40+02:00 | nil | nil | https://projects.blender.org/blender/blender-developer-docs      |
+| 21895159 | blender | refs/heads/main | lib-linux_x64               | 2026-07-22T19:16:16+02:00 | nil | nil | https://projects.blender.org/blender/lib-linux_x64               |
+|  9911224 | blender | refs/heads/main | lib-macos_arm64             | 2026-07-24T10:57:40+02:00 | nil | nil | https://projects.blender.org/blender/lib-macos_arm64             |
+|  6618230 | blender | refs/heads/main | lib-macos_x64               | 2025-06-06T08:54:08+02:00 | nil | nil | https://projects.blender.org/blender/lib-macos_x64               |
+| 37980526 | blender | refs/heads/main | lib-windows_x64             | 2026-06-29T16:07:28+02:00 | nil | nil | https://projects.blender.org/blender/lib-windows_x64             |
+| 11353958 | blender | refs/heads/main | blender-assets              | 2026-07-31T16:58:20+02:00 | nil | nil | https://projects.blender.org/blender/blender-assets              |
+|  6787174 | blender | refs/heads/main | blender-benchmarks          | 2026-06-03T16:33:43+02:00 | nil | nil | https://projects.blender.org/blender/blender-benchmarks          |
+|  7886814 | blender | refs/heads/main | lib-source                  | 2026-07-07T15:58:50+02:00 | nil | nil | https://projects.blender.org/blender/lib-source                  |
+| 31086617 | blender | refs/heads/main | lib-windows_arm64           | 2026-07-01T19:07:02+02:00 | nil | nil | https://projects.blender.org/blender/lib-windows_arm64           |
+|  8459038 | blender | refs/heads/main | lib-linux_arm64             | 2026-05-26T18:12:15+02:00 | nil | nil | https://projects.blender.org/blender/lib-linux_arm64             |
+|   821623 | blender | refs/heads/main | lib-ios_arm64               | 2025-07-24T10:09:47+02:00 | nil | nil | https://projects.blender.org/blender/lib-ios_arm64               |
+
+Clone bundles total
+
+#+name: blenderGiteaReposBundlesTotal
+#+call: ghubReposBundlesTotal(tbl=blenderGiteaReposBundles[,0])
+
+#+RESULTS: blenderGiteaReposBundlesTotal
+: 161186482
+
+** Blender Repos
+
+Filter the results, generate XML
+
+#+name: blenderReposXML
+#+call: ghubGiteaReposXML(repos=blenderGiteaReposFetch, reposExclude=blenderGiteaReposExclude, login=blenderLogin)
+
+#+RESULTS: blenderReposXML
+#+begin_export html
+<project name="blender/blender" path="blender/blender" revision="refs/heads/main" remote="blender"/>
+<project name="blender/blender-asset-tracer" path="blender/blender-asset-tracer" revision="refs/heads/main" remote="blender"/>
+<project name="blender/blender-assets" path="blender/blender-assets" revision="refs/heads/main" remote="blender"/>
+<project name="blender/blender-benchmarks" path="blender/blender-benchmarks" revision="refs/heads/main" remote="blender"/>
+<project name="blender/blender-developer-docs" path="blender/blender-developer-docs" revision="refs/heads/main" remote="blender"/>
+<project name="blender/blender-manual" path="blender/blender-manual" revision="refs/heads/main" remote="blender"/>
+<project name="blender/blender-manual-translations" path="blender/blender-manual-translations" revision="refs/heads/main" remote="blender"/>
+<project name="blender/blender-ui-translations" path="blender/blender-ui-translations" revision="refs/heads/main" remote="blender"/>
+<project name="blender/cycles" path="blender/cycles" revision="refs/heads/main" remote="blender"/>
+<project name="blender/lib-ios_arm64" path="blender/lib-ios_arm64" revision="refs/heads/main" remote="blender"/>
+<project name="blender/lib-linux_arm64" path="blender/lib-linux_arm64" revision="refs/heads/main" remote="blender"/>
+<project name="blender/lib-linux_x64" path="blender/lib-linux_x64" revision="refs/heads/main" remote="blender"/>
+<project name="blender/lib-macos_arm64" path="blender/lib-macos_arm64" revision="refs/heads/main" remote="blender"/>
+<project name="blender/lib-macos_x64" path="blender/lib-macos_x64" revision="refs/heads/main" remote="blender"/>
+<project name="blender/lib-source" path="blender/lib-source" revision="refs/heads/main" remote="blender"/>
+<project name="blender/lib-windows_arm64" path="blender/lib-windows_arm64" revision="refs/heads/main" remote="blender"/>
+<project name="blender/lib-windows_x64" path="blender/lib-windows_x64" revision="refs/heads/main" remote="blender"/>
+<project name="blender/libmv" path="blender/libmv" revision="refs/heads/main" remote="blender"/>
+<project name="blender/oss-attribution-builder" path="blender/oss-attribution-builder" revision="refs/heads/main" remote="blender"/>
+#+end_export
+
+** Generate XML
+
+Generate =blender.xml=
+
+#+begin_src xml :tangle blender.xml :noweb yes
+<manifest>
+  <<blenderReposXML()>>
+</manifest>
+#+end_src
+
+* Lab
+
+#+name: labLogin
+#+begin_src emacs-lisp
+"lab"
+#+end_src
+
+Excluded Repositories
+
+#+NAME: labGiteaReposExclude
+| .github    |
+
+#+name: labGiteaReposFetch
+#+call: ghubGiteaReposFetch(login=labLogin)
+
+Clone bundle sizes
+
+#+name: labGiteaReposBundles
+#+call: ghubGiteaReposBundles(repos=labGiteaReposFetch)
+
+#+RESULTS: labGiteaReposBundles
+| 108156 | lab | refs/heads/main | claypencil  | 2026-08-05T16:39:56+02:00 | nil | nil | https://projects.blender.org/lab/claypencil  |
+|   4256 | lab | refs/heads/main | blender_mcp | 2026-05-05T11:26:07+02:00 | nil | nil | https://projects.blender.org/lab/blender_mcp |
+
+Clone bundles total
+
+#+name: labGiteaReposBundlesTotal
+#+call: ghubReposBundlesTotal(tbl=labGiteaReposBundles[,0])
+
+#+RESULTS: labGiteaReposBundlesTotal
+: 113791
+
+** Lab Repos
+
+Filter the results, generate XML
+
+#+name: labReposXML
+#+call: ghubGiteaReposXML(repos=labGiteaReposFetch, reposExclude=labGiteaReposExclude, login=labLogin)
+
+#+RESULTS: labReposXML
+#+begin_export html
+<project name="lab/blender_mcp" path="lab/blender_mcp" revision="refs/heads/main" remote="blender"/>
+<project name="lab/claypencil" path="lab/claypencil" revision="refs/heads/main" remote="blender"/>
+#+end_export
+
+** Generate XML
+
+Generate =lab.xml=
+
+#+begin_src xml :tangle lab.xml :noweb yes
+<manifest>
+  <<labReposXML()>>
+</manifest>
+#+end_src
+
+* Education
+
+#+name: educationLogin
+#+begin_src emacs-lisp
+"education"
+#+end_src
+
+Excluded Repositories
+
+#+NAME: educationGiteaReposExclude
+| .github    |
+
+#+name: educationGiteaReposFetch
+#+call: ghubGiteaReposFetch(login=educationLogin)
+
+Clone bundle sizes
+
+#+name: educationGiteaReposBundles
+#+call: ghubGiteaReposBundles(repos=educationGiteaReposFetch)
+
+#+RESULTS: educationGiteaReposBundles
+| 64418 | education | refs/heads/staging | docs | 2026-06-29T21:00:59+02:00 | nil | nil | https://projects.blender.org/education/docs |
+
+Clone bundles total
+
+#+name: educationGiteaReposBundlesTotal
+#+call: ghubReposBundlesTotal(tbl=educationGiteaReposBundles[,0])
+
+#+RESULTS: educationGiteaReposBundlesTotal
+: 64418
+
+** Education Repos
+
+Filter the results, generate XML
+
+#+name: educationReposXML
+#+call: ghubGiteaReposXML(repos=educationGiteaReposFetch, reposExclude=educationGiteaReposExclude, login=educationLogin)
+
+#+RESULTS: educationReposXML
+#+begin_export html
+<project name="education/docs" path="education/docs" revision="refs/heads/staging" remote="blender"/>
+#+end_export
+
+** Generate XML
+
+Generate =education.xml=
+
+#+begin_src xml :tangle education.xml :noweb yes
+<manifest>
+  <<educationReposXML()>>
+</manifest>
+#+end_src
+
+* Extensions
+
+#+name: extensionsLogin
+#+begin_src emacs-lisp
+"extensions"
+#+end_src
+
+Excluded Repositories
+
+#+NAME: extensionsGiteaReposExclude
+| .github    |
+
+#+name: extensionsGiteaReposFetch
+#+call: ghubGiteaReposFetch(login=extensionsLogin)
+
+Clone bundle sizes
+
+#+name: extensionsGiteaReposBundles
+#+call: ghubGiteaReposBundles(repos=extensionsGiteaReposFetch)
+
+#+RESULTS: extensionsGiteaReposBundles
+|   51 | extensions | refs/heads/main | lighting_dynamic_sky     | 2024-05-15T07:15:28+02:00 | nil | nil | https://projects.blender.org/extensions/lighting_dynamic_sky     |
+|  385 | extensions | refs/heads/main | power_sequencer          | 2025-12-25T12:43:17+01:00 | nil | nil | https://projects.blender.org/extensions/power_sequencer          |
+|  191 | extensions | refs/heads/main | curve_tools              | 2025-03-09T13:01:56+01:00 | nil | nil | https://projects.blender.org/extensions/curve_tools              |
+|  211 | extensions | refs/heads/main | mesh_bsurfaces           | 2025-03-09T12:58:28+01:00 | nil | nil | https://projects.blender.org/extensions/mesh_bsurfaces           |
+|  188 | extensions | refs/heads/main | add_curve_sapling        | 2025-12-25T12:37:27+01:00 | nil | nil | https://projects.blender.org/extensions/add_curve_sapling        |
+| 3489 | extensions | refs/heads/main | space_view3d_pie_menus   | 2026-07-17T15:14:12+02:00 | nil | nil | https://projects.blender.org/extensions/space_view3d_pie_menus   |
+|  211 | extensions | refs/heads/main | mesh_tools               | 2024-05-15T07:15:54+02:00 | nil | nil | https://projects.blender.org/extensions/mesh_tools               |
+|   76 | extensions | refs/heads/main | blender_id               | 2025-03-09T13:01:14+01:00 | nil | nil | https://projects.blender.org/extensions/blender_id               |
+|   76 | extensions | refs/heads/main | io_anim_camera           | 2025-03-09T13:04:32+01:00 | nil | nil | https://projects.blender.org/extensions/io_anim_camera           |
+|   71 | extensions | refs/heads/main | bone_selection_sets      | 2025-03-09T13:09:29+01:00 | nil | nil | https://projects.blender.org/extensions/bone_selection_sets      |
+|  155 | extensions | refs/heads/main | animation_animall        | 2026-02-14T23:21:37+01:00 | nil | nil | https://projects.blender.org/extensions/animation_animall        |
+|   50 | extensions | refs/heads/main | add_mesh_discombobulator | 2024-05-15T07:08:47+02:00 | nil | nil | https://projects.blender.org/extensions/add_mesh_discombobulator |
+|  136 | extensions | refs/heads/main | io_export_dxf            | 2025-03-09T13:04:05+01:00 | nil | nil | https://projects.blender.org/extensions/io_export_dxf            |
+|   45 | extensions | refs/heads/main | io_import_BrushSet       | 2025-03-09T13:03:25+01:00 | nil | nil | https://projects.blender.org/extensions/io_import_BrushSet       |
+|  300 | extensions | refs/heads/main | magic_uv                 | 2024-05-22T04:27:10+02:00 | nil | nil | https://projects.blender.org/extensions/magic_uv                 |
+|  565 | extensions | refs/heads/main | development_icon_get     | 2025-03-09T13:07:46+01:00 | nil | nil | https://projects.blender.org/extensions/development_icon_get     |
+|  738 | extensions | refs/heads/main | io_scene_x3d             | 2025-03-18T00:27:40+01:00 | nil | nil | https://projects.blender.org/extensions/io_scene_x3d             |
+|  121 | extensions | refs/heads/main | btrace                   | 2025-03-09T13:08:51+01:00 | nil | nil | https://projects.blender.org/extensions/btrace                   |
+|   65 | extensions | refs/heads/main | io_anim_nuke_chan        | 2025-03-09T13:06:57+01:00 | nil | nil | https://projects.blender.org/extensions/io_anim_nuke_chan        |
+|  386 | extensions | refs/heads/main | mesh_tissue              | 2024-05-24T15:13:44+02:00 | nil | nil | https://projects.blender.org/extensions/mesh_tissue              |
+|   74 | extensions | refs/heads/main | paint_palette            | 2024-05-15T07:13:16+02:00 | nil | nil | https://projects.blender.org/extensions/paint_palette            |
+|   60 | extensions | refs/heads/main | object_scatter           | 2024-05-15T07:14:17+02:00 | nil | nil | https://projects.blender.org/extensions/object_scatter           |
+|   58 | extensions | refs/heads/main | lighting_tri_lights      | 2025-03-23T09:24:53+01:00 | nil | nil | https://projects.blender.org/extensions/lighting_tri_lights      |
+|   80 | extensions | refs/heads/main | add_curve_ivygen         | 2025-03-09T13:10:03+01:00 | nil | nil | https://projects.blender.org/extensions/add_curve_ivygen         |
+|   47 | extensions | refs/heads/main | real_snow                | 2025-03-09T13:08:36+01:00 | nil | nil | https://projects.blender.org/extensions/real_snow                |
+|   43 | extensions | refs/heads/main | vdm_brush_baker          | 2024-07-02T13:13:11+02:00 | nil | nil | https://projects.blender.org/extensions/vdm_brush_baker          |
+|  654 | extensions | refs/heads/main | archimesh                | 2024-05-15T07:11:35+02:00 | nil | nil | https://projects.blender.org/extensions/archimesh                |
+
+Clone bundles total
+
+#+name: extensionsGiteaReposBundlesTotal
+#+call: ghubReposBundlesTotal(tbl=extensionsGiteaReposBundles[,0])
+
+#+RESULTS: extensionsGiteaReposBundlesTotal
+: 8526
+
+** Extensions Repos
+
+Filter the results, generate XML
+
+#+name: extensionsReposXML
+#+call: ghubGiteaReposXML(repos=extensionsGiteaReposFetch, reposExclude=extensionsGiteaReposExclude, login=extensionsLogin)
+
+#+RESULTS: extensionsReposXML
+#+begin_export html
+<project name="extensions/add_curve_ivygen" path="extensions/add_curve_ivygen" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/add_curve_sapling" path="extensions/add_curve_sapling" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/add_mesh_discombobulator" path="extensions/add_mesh_discombobulator" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/animation_animall" path="extensions/animation_animall" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/archimesh" path="extensions/archimesh" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/blender_id" path="extensions/blender_id" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/bone_selection_sets" path="extensions/bone_selection_sets" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/btrace" path="extensions/btrace" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/curve_tools" path="extensions/curve_tools" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/development_icon_get" path="extensions/development_icon_get" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/io_anim_camera" path="extensions/io_anim_camera" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/io_anim_nuke_chan" path="extensions/io_anim_nuke_chan" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/io_export_dxf" path="extensions/io_export_dxf" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/io_import_BrushSet" path="extensions/io_import_BrushSet" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/io_scene_x3d" path="extensions/io_scene_x3d" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/lighting_dynamic_sky" path="extensions/lighting_dynamic_sky" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/lighting_tri_lights" path="extensions/lighting_tri_lights" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/magic_uv" path="extensions/magic_uv" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/mesh_bsurfaces" path="extensions/mesh_bsurfaces" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/mesh_tissue" path="extensions/mesh_tissue" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/mesh_tools" path="extensions/mesh_tools" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/object_scatter" path="extensions/object_scatter" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/paint_palette" path="extensions/paint_palette" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/power_sequencer" path="extensions/power_sequencer" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/real_snow" path="extensions/real_snow" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/space_view3d_pie_menus" path="extensions/space_view3d_pie_menus" revision="refs/heads/main" remote="blender"/>
+<project name="extensions/vdm_brush_baker" path="extensions/vdm_brush_baker" revision="refs/heads/main" remote="blender"/>
+#+end_export
+
+** Generate XML
+
+Generate =extensions.xml=
+
+#+begin_src xml :tangle extensions.xml :noweb yes
+<manifest>
+  <<extensionsReposXML()>>
+</manifest>
+#+end_src
+
+* Studio
+
+#+name: studioLogin
+#+begin_src emacs-lisp
+"studio"
+#+end_src
+
+Excluded Repositories
+
+#+NAME: studioGiteaReposExclude
+| .github    |
+
+#+name: studioGiteaReposFetch
+#+call: ghubGiteaReposFetch(login=studioLogin)
+
+Clone bundle sizes
+
+#+name: studioGiteaReposBundles
+#+call: ghubGiteaReposBundles(repos=studioGiteaReposFetch)
+
+#+RESULTS: studioGiteaReposBundles
+| 352121 | studio | refs/heads/main | blender-studio-tools | 2026-07-24T16:02:06+02:00 | nil | nil | https://projects.blender.org/studio/blender-studio-tools |
+| 208854 | studio | refs/heads/main | blender-studio       | 2026-08-05T17:21:21+02:00 | nil | nil | https://projects.blender.org/studio/blender-studio       |
+| 114025 | studio | refs/heads/main | flamenco             | 2026-08-04T14:50:26+02:00 | nil | nil | https://projects.blender.org/studio/flamenco             |
+|   1510 | studio | refs/heads/main | watchtower           | 2025-12-19T12:34:42+01:00 | nil | nil | https://projects.blender.org/studio/watchtower           |
+|    961 | studio | refs/heads/main | svn-manager          | 2026-04-26T23:59:05+02:00 | nil | nil | https://projects.blender.org/studio/svn-manager          |
+|    157 | studio | refs/heads/main | playsync             | 2025-02-06T19:13:40+01:00 | nil | nil | https://projects.blender.org/studio/playsync             |
+| 789082 | studio | refs/heads/main | asset-bundles        | 2026-01-30T18:55:16+01:00 | nil | nil | https://projects.blender.org/studio/asset-bundles        |
+|    126 | studio | refs/heads/main | flamenco-orchestra   | 2026-03-08T17:58:26+01:00 | nil | nil | https://projects.blender.org/studio/flamenco-orchestra   |
+
+Clone bundles total
+
+#+name: studioGiteaReposBundlesTotal
+#+call: ghubReposBundlesTotal(tbl=studioGiteaReposBundles[,0])
+
+#+RESULTS: studioGiteaReposBundlesTotal
+: 1466836
+
+** Studio Repos
+
+Filter the results, generate XML
+
+#+name: studioReposXML
+#+call: ghubGiteaReposXML(repos=studioGiteaReposFetch, reposExclude=studioGiteaReposExclude, login=studioLogin)
+
+#+RESULTS: studioReposXML
+#+begin_export html
+<project name="studio/asset-bundles" path="studio/asset-bundles" revision="refs/heads/main" remote="blender"/>
+<project name="studio/blender-studio" path="studio/blender-studio" revision="refs/heads/main" remote="blender"/>
+<project name="studio/blender-studio-tools" path="studio/blender-studio-tools" revision="refs/heads/main" remote="blender"/>
+<project name="studio/flamenco" path="studio/flamenco" revision="refs/heads/main" remote="blender"/>
+<project name="studio/flamenco-orchestra" path="studio/flamenco-orchestra" revision="refs/heads/main" remote="blender"/>
+<project name="studio/playsync" path="studio/playsync" revision="refs/heads/main" remote="blender"/>
+<project name="studio/svn-manager" path="studio/svn-manager" revision="refs/heads/main" remote="blender"/>
+<project name="studio/watchtower" path="studio/watchtower" revision="refs/heads/main" remote="blender"/>
+#+end_export
+
+** Generate XML
+
+Generate =studio.xml=
+
+#+begin_src xml :tangle studio.xml :noweb yes
+<manifest>
+  <<studioReposXML()>>
+</manifest>
+#+end_src
+
+* Infrastructure
+
+#+name: infrastructureLogin
+#+begin_src emacs-lisp
+"infrastructure"
+#+end_src
+
+Excluded Repositories
+
+#+NAME: infrastructureGiteaReposExclude
+| .github    |
+
+#+name: infrastructureGiteaReposFetch
+#+call: ghubGiteaReposFetch(login=infrastructureLogin)
+
+Clone bundle sizes
+
+#+name: infrastructureGiteaReposBundles
+#+call: ghubGiteaReposBundles(repos=infrastructureGiteaReposFetch)
+
+#+RESULTS: infrastructureGiteaReposBundles
+|   1751 | infrastructure | refs/heads/main   | blender-buildbot-www        | 2026-07-14T15:59:45+02:00 | nil | nil | https://projects.blender.org/infrastructure/blender-buildbot-www        |
+|  10476 | infrastructure | refs/heads/main   | conference-website          | 2026-08-05T13:03:53+02:00 | nil | nil | https://projects.blender.org/infrastructure/conference-website          |
+|  16466 | infrastructure | refs/heads/main   | devfund-website             | 2026-07-29T11:05:55+02:00 | nil | nil | https://projects.blender.org/infrastructure/devfund-website             |
+|  15875 | infrastructure | refs/heads/main   | extensions-website          | 2026-07-14T15:54:01+02:00 | nil | nil | https://projects.blender.org/infrastructure/extensions-website          |
+|    330 | infrastructure | refs/heads/master | blender-id-addon            | 2023-02-07T11:08:17+01:00 | nil | nil | https://projects.blender.org/infrastructure/blender-id-addon            |
+|   3940 | infrastructure | refs/heads/main   | blender-id                  | 2026-08-05T18:11:34+02:00 | nil | nil | https://projects.blender.org/infrastructure/blender-id                  |
+|  25924 | infrastructure | refs/heads/main   | blender-open-data           | 2026-08-03T10:44:04+02:00 | nil | nil | https://projects.blender.org/infrastructure/blender-open-data           |
+|   6270 | infrastructure | refs/heads/main   | blender-org                 | 2026-07-27T17:17:45+02:00 | nil | nil | https://projects.blender.org/infrastructure/blender-org                 |
+| 110319 | infrastructure | refs/heads/master | blender-store               | 2023-02-07T11:08:28+01:00 | nil | nil | https://projects.blender.org/infrastructure/blender-store               |
+|  17019 | infrastructure | refs/heads/main   | web-assets                  | 2026-07-30T17:19:50+02:00 | nil | nil | https://projects.blender.org/infrastructure/web-assets                  |
+|  13610 | infrastructure | refs/heads/main   | looper                      | 2026-07-29T10:35:52+02:00 | nil | nil | https://projects.blender.org/infrastructure/looper                      |
+|    134 | infrastructure | refs/heads/main   | blender-bot                 | 2026-06-30T12:17:54+02:00 | nil | nil | https://projects.blender.org/infrastructure/blender-bot                 |
+|     31 | infrastructure | refs/heads/main   | meta                        | 2025-08-04T15:31:48+02:00 | nil | nil | https://projects.blender.org/infrastructure/meta                        |
+|  16867 | infrastructure | refs/heads/main   | blender-metrics             | 2026-01-28T16:11:28+01:00 | nil | nil | https://projects.blender.org/infrastructure/blender-metrics             |
+|     76 | infrastructure | refs/heads/main   | gitea-blenderid-webhook     | 2025-08-26T15:50:45+02:00 | nil | nil | https://projects.blender.org/infrastructure/gitea-blenderid-webhook     |
+|   1155 | infrastructure | refs/heads/main   | gitea-custom                | 2026-07-30T18:22:45+02:00 | nil | nil | https://projects.blender.org/infrastructure/gitea-custom                |
+|   1307 | infrastructure | refs/heads/main   | developer-website           | 2026-05-29T13:02:48+02:00 | nil | nil | https://projects.blender.org/infrastructure/developer-website           |
+|    950 | infrastructure | refs/heads/main   | archive-website             | 2025-01-23T19:13:34+01:00 | nil | nil | https://projects.blender.org/infrastructure/archive-website             |
+|    108 | infrastructure | refs/heads/main   | blender-id-oauth-client     | 2026-04-27T10:13:54+02:00 | nil | nil | https://projects.blender.org/infrastructure/blender-id-oauth-client     |
+|    146 | infrastructure | refs/heads/main   | mediawiki-bootstrap         | 2023-12-07T11:08:07+01:00 | nil | nil | https://projects.blender.org/infrastructure/mediawiki-bootstrap         |
+|   1068 | infrastructure | refs/heads/main   | docs-website                | 2026-05-29T15:25:48+02:00 | nil | nil | https://projects.blender.org/infrastructure/docs-website                |
+|    152 | infrastructure | refs/heads/main   | discourse-blender-id        | 2025-04-04T22:47:13+02:00 | nil | nil | https://projects.blender.org/infrastructure/discourse-blender-id        |
+|  62527 | infrastructure | refs/heads/main   | conference-video-processing | 2026-08-05T18:48:15+02:00 | nil | nil | https://projects.blender.org/infrastructure/conference-video-processing |
+|     43 | infrastructure | refs/heads/main   | saleor-vatrc                | 2023-07-06T21:56:51+02:00 | nil | nil | https://projects.blender.org/infrastructure/saleor-vatrc                |
+|     50 | infrastructure | refs/heads/main   | codesign                    | 2024-09-06T11:42:53+02:00 | nil | nil | https://projects.blender.org/infrastructure/codesign                    |
+|    685 | infrastructure | refs/heads/main   | blender-org-down            | 2023-11-23T01:56:32+01:00 | nil | nil | https://projects.blender.org/infrastructure/blender-org-down            |
+
+Clone bundles total
+
+#+name: infrastructureGiteaReposBundlesTotal
+#+call: ghubReposBundlesTotal(tbl=infrastructureGiteaReposBundles[,0])
+
+#+RESULTS: infrastructureGiteaReposBundlesTotal
+: 307279
+
+** Infrastructure Repos
+
+Filter the results, generate XML
+
+#+name: infrastructureReposXML
+#+call: ghubGiteaReposXML(repos=infrastructureGiteaReposFetch, reposExclude=infrastructureGiteaReposExclude, login=infrastructureLogin)
+
+#+RESULTS: infrastructureReposXML
+#+begin_export html
+<project name="infrastructure/archive-website" path="infrastructure/archive-website" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/blender-bot" path="infrastructure/blender-bot" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/blender-buildbot-www" path="infrastructure/blender-buildbot-www" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/blender-id" path="infrastructure/blender-id" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/blender-id-addon" path="infrastructure/blender-id-addon" revision="refs/heads/master" remote="blender"/>
+<project name="infrastructure/blender-id-oauth-client" path="infrastructure/blender-id-oauth-client" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/blender-metrics" path="infrastructure/blender-metrics" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/blender-open-data" path="infrastructure/blender-open-data" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/blender-org" path="infrastructure/blender-org" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/blender-org-down" path="infrastructure/blender-org-down" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/blender-store" path="infrastructure/blender-store" revision="refs/heads/master" remote="blender"/>
+<project name="infrastructure/codesign" path="infrastructure/codesign" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/conference-video-processing" path="infrastructure/conference-video-processing" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/conference-website" path="infrastructure/conference-website" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/developer-website" path="infrastructure/developer-website" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/devfund-website" path="infrastructure/devfund-website" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/discourse-blender-id" path="infrastructure/discourse-blender-id" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/docs-website" path="infrastructure/docs-website" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/extensions-website" path="infrastructure/extensions-website" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/gitea-blenderid-webhook" path="infrastructure/gitea-blenderid-webhook" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/gitea-custom" path="infrastructure/gitea-custom" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/looper" path="infrastructure/looper" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/mediawiki-bootstrap" path="infrastructure/mediawiki-bootstrap" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/meta" path="infrastructure/meta" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/saleor-vatrc" path="infrastructure/saleor-vatrc" revision="refs/heads/main" remote="blender"/>
+<project name="infrastructure/web-assets" path="infrastructure/web-assets" revision="refs/heads/main" remote="blender"/>
+#+end_export
+
+** Generate XML
+
+Generate =infrastructure.xml=
+
+#+begin_src xml :tangle infrastructure.xml :noweb yes
+<manifest>
+  <<infrastructureReposXML()>>
+</manifest>
+#+end_src

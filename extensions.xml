@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest>
+  <project name="extensions/add_curve_ivygen" path="extensions/add_curve_ivygen" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/add_curve_sapling" path="extensions/add_curve_sapling" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/add_mesh_discombobulator" path="extensions/add_mesh_discombobulator" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/animation_animall" path="extensions/animation_animall" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/archimesh" path="extensions/archimesh" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/blender_id" path="extensions/blender_id" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/bone_selection_sets" path="extensions/bone_selection_sets" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/btrace" path="extensions/btrace" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/curve_tools" path="extensions/curve_tools" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/development_icon_get" path="extensions/development_icon_get" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/io_anim_camera" path="extensions/io_anim_camera" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/io_anim_nuke_chan" path="extensions/io_anim_nuke_chan" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/io_export_dxf" path="extensions/io_export_dxf" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/io_import_BrushSet" path="extensions/io_import_BrushSet" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/io_scene_x3d" path="extensions/io_scene_x3d" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/lighting_dynamic_sky" path="extensions/lighting_dynamic_sky" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/lighting_tri_lights" path="extensions/lighting_tri_lights" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/magic_uv" path="extensions/magic_uv" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/mesh_bsurfaces" path="extensions/mesh_bsurfaces" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/mesh_tissue" path="extensions/mesh_tissue" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/mesh_tools" path="extensions/mesh_tools" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/object_scatter" path="extensions/object_scatter" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/paint_palette" path="extensions/paint_palette" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/power_sequencer" path="extensions/power_sequencer" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/real_snow" path="extensions/real_snow" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/space_view3d_pie_menus" path="extensions/space_view3d_pie_menus" revision="refs/heads/main" remote="blender"/>
+  <project name="extensions/vdm_brush_baker" path="extensions/vdm_brush_baker" revision="refs/heads/main" remote="blender"/>
+</manifest>
