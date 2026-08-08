@@ -36,6 +36,7 @@ Blender recently migrated to Gitea hosted at [[https://projects.blender.org][pro
   <include name="lab.xml"/>
   <include name="studio.xml"/>
   <include name="infrastructure.xml"/>
+  <include name="ecosystem.xml"/>
 </manifest>
 #+end_src
 
@@ -55,6 +56,48 @@ Load blocks
 
 #+RESULTS:
 : 1
+
+* Ecosystem
+
+#+begin_src xml :tangle ecosystem.xml
+<manifest>
+#+end_src
+
+See [[https://bradyajohnston.github.io/extensions/][bradyajohnston.github.io/extensions]] for a list of projects & downloads
+
+#+begin_src xml :tangle ecosystem.xml
+  <!-- databpy -->
+  <project path="databpy/databpy" name="BradyAJohnston/databpy" groups="plugins" revision="refs/heads/main" remote="github" />
+  <project path="databpy/nodebpy" name="BradyAJohnston/nodebpy" groups="plugins" revision="refs/heads/main" remote="github" />
+  <project path="databpy/MolecularNodes" name="BradyAJohnston/MolecularNodes" groups="plugins" revision="refs/heads/main" remote="github" />
+#+end_src
+
+These are scripts for CI/CD, builds and automation
+
+#+begin_src xml :tangle ecosystem.xml
+  <!-- cicd -->
+  <project path="cicd/dailybpy" name="BradyAJohnston/dailybpy" groups="cicd" revision="refs/heads/main" remote="github" />
+  <project path="cicd/extbpy" name="BradyAJohnston/extbpy" groups="cicd" revision="refs/heads/main" remote="github" />
+  <project path="cicd/setup-blender" name="BradyAJohnston/setup-blender" groups="cicd" revision="refs/heads/main" remote="github" />
+#+end_src
+
+GIS plugins
+
+#+begin_src xml :tangle ecosystem.xml
+  <!-- gis -->
+  <project path="gis/blosm" name="vvoovv/blosm" groups="gis" revision="refs/heads/release" remote="github" />
+  <project path="gis/blendergis" name="domlysz/blendergis" groups="gis" revision="refs/heads/master" remote="github" />
+#+end_src
+
+#+begin_src xml :tangle ecosystem.xml
+  <!-- ml -->
+  <project path="ml/gnm" name="google/gnm" groups="ml" revision="refs/heads/main" remote="github" />  
+</manifest>
+#+end_src
+
+** databpy
+
+
 
 * Blender
 

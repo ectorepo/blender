@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest>
+  <!-- databpy -->
+  <project path="databpy/databpy" name="BradyAJohnston/databpy" groups="plugins" revision="refs/heads/main" remote="github" />
+  <project path="databpy/nodebpy" name="BradyAJohnston/nodebpy" groups="plugins" revision="refs/heads/main" remote="github" />
+  <project path="databpy/MolecularNodes" name="BradyAJohnston/MolecularNodes" groups="plugins" revision="refs/heads/main" remote="github" />
+
+  <!-- cicd -->
+  <project path="cicd/dailybpy" name="BradyAJohnston/dailybpy" groups="cicd" revision="refs/heads/main" remote="github" />
+  <project path="cicd/extbpy" name="BradyAJohnston/extbpy" groups="cicd" revision="refs/heads/main" remote="github" />
+  <project path="cicd/setup-blender" name="BradyAJohnston/setup-blender" groups="cicd" revision="refs/heads/main" remote="github" />
+
+  <!-- gis -->
+  <project path="gis/blosm" name="vvoovv/blosm" groups="gis" revision="refs/heads/release" remote="github" />
+  <project path="gis/blendergis" name="domlysz/blendergis" groups="gis" revision="refs/heads/master" remote="github" />
+
+  <!-- ml -->
+  <project path="ml/gnm" name="google/gnm" groups="ml" revision="refs/heads/main" remote="github" />  
+</manifest>
