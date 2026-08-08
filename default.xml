@@ -9,4 +9,5 @@
   <include name="lab.xml"/>
   <include name="studio.xml"/>
   <include name="infrastructure.xml"/>
+  <include name="ecosystem.xml"/>
 </manifest>
